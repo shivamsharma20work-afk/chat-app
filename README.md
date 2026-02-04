@@ -44,26 +44,6 @@ DevOps / Cloud
     -Horizontal Pod Autoscaler (HPA)
     -Metrics Server
 
-📐 Architecture Diagram
-
-User Browser
-     |
-     |  http://chatapp.local
-     v
-┌────────────────────┐
-│  NGINX Ingress     │
-│  chatapp.local     │
-└─────────┬──────────┘
-          |
-          ├── "/"     → Frontend Service (React + NGINX)
-          |
-          └── "/api"  → Backend Service (Node.js + Express)
-                             |
-                             v
-                       MongoDB Service
-
-
-
 🔁 Application Flow
 
 1.User opens chatapp.local
@@ -74,43 +54,6 @@ User Browser
 4.Backend processes requests and connects to MongoDB
 5.Socket.IO enables real-time messaging
 6.Kubernetes HPA scales pods automatically based on CPU usage
-
-📂 Project Structure
-
-chat-app/
-│
-├── backend/
-│   ├── src/
-│   │   ├── index.js
-│   │   ├── routes/
-│   │   ├── controllers/
-│   │   └── models/
-│   ├── Dockerfile
-│   ├── package.json
-│   └── .env.example
-│
-├── frontend/
-│   ├── src/
-│   │   ├── api.js
-│   │   └── components/
-│   ├── Dockerfile
-│   ├── nginx.conf
-│   ├── package.json
-│   └── .env.example
-│
-├── k8s/
-│   ├── namespace.yaml
-│   ├── backend-deployment.yaml
-│   ├── backend-service.yaml
-│   ├── backend-hpa.yaml
-│   ├── frontend-deployment.yaml
-│   ├── frontend-service.yaml
-│   ├── frontend-hpa.yaml
-│   ├── mongodb-deployment.yaml
-│   ├── mongodb-service.yaml
-│   └── chatapp-ingress.yaml
-│
-└── README.md
 
 🔐 Environment Variables
 
