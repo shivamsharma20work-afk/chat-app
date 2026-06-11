@@ -32,13 +32,13 @@ jobs:
           uses: hashicorp/setup-terraform@v3
 
         - name: Terraform Init
-          run: terraform init
+          run: terraform init ./Terraform
         
         - name: Terraform Validate
-          run: terraform validate
+          run: terraform validate ./Terraform
         
         - name: Terraform Apply
-          run: terraform apply -auto-approve
+          run: terraform apply -auto-approve  ./Terraform
            
 
         - name: Configure Docker for GCP
