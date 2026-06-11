@@ -1,9 +1,9 @@
-variables "aws-region" {
+variable "aws-region" {
     type = string
     default = "us-central1"
 }
 
-variables "project_id" {
+variable "project_id" {
     type = string
     default = "project-31e386f5-2cc7-4ee4-a4b"
 }
