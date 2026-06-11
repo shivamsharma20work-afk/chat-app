@@ -8,6 +8,13 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    host: true
+    host: true,
+    proxy: {
+      '/api': 'http://backend:5001',
+      '/socket.io': {
+        target: 'http://backend:5001',
+        ws: true
+      }
+    }
   }
 })

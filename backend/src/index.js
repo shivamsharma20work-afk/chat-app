@@ -4,47 +4,34 @@ import cors from "cors";
 import dotenv from "dotenv";
 import http from "http";
 import { Server } from "socket.io";
-
 import authRoutes from "./routes/auth.routes.js";
-import chatRoutes from "./routes/chat.routes.js";
 
 dotenv.config();
 
 const app = express();
 
-// middlewares
 app.use(cors());
 app.use(express.json());
 
-// routes
+// Routes
 app.use("/auth", authRoutes);
-app.use("/chat", chatRoutes);
 
-// test route
-app.get("/", (req, res) => {
-  res.send("Backend running 🚀");
-});
+// Test route
+app.get("/", (req, res) => res.send("Backend running 🚀"));
 
-// mongo connection
+// MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected ✅"))
   .catch((err) => console.error("Mongo error ❌", err));
 
-
 const PORT = process.env.PORT || 5001;
-
-
-
-
-
-// server
-
 const server = http.createServer(app);
 
+// Socket.io
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
