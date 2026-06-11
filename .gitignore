@@ -1,0 +1,54 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+
+# Docker
+.dockerignore
+
+# Terraform
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+crash.log
+crash.*.log
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Coverage
+coverage/
+.nyc_output/
