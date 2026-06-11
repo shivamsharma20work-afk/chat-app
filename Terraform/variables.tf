@@ -1,4 +1,4 @@
-variable "aws-region" {
+variable "region" {
     type = string
     default = "us-central1"
 }
