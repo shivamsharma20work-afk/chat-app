@@ -50,6 +50,16 @@ export default function Login() {
         <button onClick={submit}>
           {isSignup ? "Create Account" : "Login"}
         </button>
+
+        {/* ✅ Forgot password link */}
+        {!isSignup && (
+          <p className="switch-text">
+            <span onClick={() => navigate("/forgot-password")}>
+              Forgot password?
+            </span>
+          </p>
+        )}
+
         <p className="switch-text">
           {isSignup ? (
             <>Already have an account?{" "}
