@@ -43,6 +43,7 @@ jobs:
         #   run: terraform apply -auto-approve
         #   working-directory: Terraform
            
+        
 
         - name: Configure Docker for GCP
           run: gcloud auth configure-docker ${{env.GAR_LOCATION}}-docker.pkg.dev --quiet
