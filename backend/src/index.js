@@ -13,13 +13,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
 app.use("/auth", authRoutes);
 
-// Test route
 app.get("/", (req, res) => res.send("Backend running 🚀"));
 
-// MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected ✅"))
@@ -28,7 +25,6 @@ mongoose
 const PORT = process.env.PORT || 5001;
 const server = http.createServer(app);
 
-// Socket.io
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -48,6 +44,11 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", (msg) => {
     io.emit("receiveMessage", msg);
+  });
+
+  // ✅ Typing event
+  socket.on("typing", (username) => {
+    socket.broadcast.emit("typing", username);
   });
 
   socket.on("disconnect", () => {
