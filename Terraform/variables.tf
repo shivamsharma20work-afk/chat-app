@@ -1,11 +1,11 @@
-variable "region" {
-    type = string
-    default = "us-central1"
+variable "project_id" {
+    type        = string
+    default     = "project-31e386f5-2cc7-4ee4-a4b"
 }
 
-variable "project_id" {
-    type = string
-    default = "project-31e386f5-2cc7-4ee4-a4b"
+variable "region" {
+    type        = string
+    default     = "us-central1"
 }
 
 variable "zone" {
@@ -20,7 +20,7 @@ variable "gce_machine_type" {
 
 variable "gce-instance-name" {
     type        = string
-    default     = "chaos-engineering"
+    default     = "chat-app-instance"
 }
 
 variable "gce_instance_image" {
