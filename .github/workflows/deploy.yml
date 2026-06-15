@@ -49,7 +49,7 @@ jobs:
             key: ${{ secrets.SSH_PRIVATE_KEY }}
             script: |
               TAG=${{ github.run_number }}
-
+ 
               # Docker auth (important)
               gcloud auth configure-docker $GAR_LOCATION-docker.pkg.dev --quiet
 
