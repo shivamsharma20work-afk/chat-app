@@ -65,10 +65,12 @@ jobs:
               docker stop backend || true
               docker rm backend || true
 
+              docker network create app-network || true
+
               # Run new containers
-              docker run -d -p 3001:80 --name frontend ${{env.GAR_LOCATION}}-docker.pkg.dev/${{env.REPOSITORY}}/${{env.FRONTEND_IMAGE}}:$TAG
+              docker run -d -p 3001:80 --name frontend --network app-network ${{env.GAR_LOCATION}}-docker.pkg.dev/${{env.PROJECT_ID}}/${{env.REPOSITORY}}/${{env.FRONTEND_IMAGE}}:$TAG
 
               
-              docker run -d -p 1013:5001 --name backend ${{env.GAR_LOCATION}}-docker.pkg.dev/${{env.REPOSITORY}}/${{env.BACKEND_IMAGE}}:$TAG
+              docker run -d -p 1013:5001 --name backend --network app-network ${{env.GAR_LOCATION}}-docker.pkg.dev/${{env.PROJECT_ID}}/${{env.REPOSITORY}}/${{env.BACKEND_IMAGE}}:$TAG
               
               
