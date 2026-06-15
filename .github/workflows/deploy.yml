@@ -27,23 +27,6 @@ jobs:
           with:
             workload_identity_provider: 'projects/560553642849/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
             service_account: 'github-actions-sa@project-31e386f5-2cc7-4ee4-a4b.iam.gserviceaccount.com'
-        
-        # - name: Setup Terraform
-        #   uses: hashicorp/setup-terraform@v3
-
-        # - name: Terraform Init
-        #   run: terraform init 
-        #   working-directory: Terraform
-        
-        # - name: Terraform Validate
-        #   run: terraform validate 
-        #   working-directory: Terraform
-        
-        # - name: Terraform Apply
-        #   run: terraform apply -auto-approve
-        #   working-directory: Terraform
-           
-
 
         - name: Configure Docker for GCP
           run: gcloud auth configure-docker ${{env.GAR_LOCATION}}-docker.pkg.dev --quiet
@@ -58,5 +41,33 @@ jobs:
             docker build -t ${{env.GAR_LOCATION}}-docker.pkg.dev/${{env.PROJECT_ID}}/${{env.REPOSITORY}}/${{env.BACKEND_IMAGE}}:${{github.run_number}}  ./backend
             docker push ${{env.GAR_LOCATION}}-docker.pkg.dev/${{env.PROJECT_ID}}/${{env.REPOSITORY}}/${{env.BACKEND_IMAGE}}:${{github.run_number}}
 
-        
-            
+        - name: Deploy to VM
+          uses: appleboy/ssh-action@v1.0.3
+          with:
+            host: ${{ secrets.VM_HOST }}
+            username: ${{ secrets.VM_USER }}
+            key: ${{ secrets.SSH_PRIVATE_KEY }}
+            script: |
+              TAG=${{ github.run_number }}
+
+              # Docker auth (important)
+              gcloud auth configure-docker $GAR_LOCATION-docker.pkg.dev --quiet
+
+              # Pull latest images
+              docker pull $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$FRONTEND_IMAGE:$TAG
+              docker pull $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$BACKEND_IMAGE:$TAG
+
+              # Stop & remove old containers
+              docker stop frontend || true
+              docker rm frontend || true
+
+              docker stop backend || true
+              docker rm backend || true
+
+              # Run new containers
+              docker run -d -p 3001:80 --name frontend \
+              $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$FRONTEND_IMAGE:$TAG
+
+              docker run -d -p 1013:5001 --name backend \
+              $GAR_LOCATION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/$BACKEND_IMAGE:$TAG
+              
