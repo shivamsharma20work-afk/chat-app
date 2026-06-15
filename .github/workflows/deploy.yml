@@ -69,8 +69,7 @@ jobs:
 
               # Run new containers
               docker run -d -p 3001:80 --name frontend --network app-network ${{env.GAR_LOCATION}}-docker.pkg.dev/${{env.PROJECT_ID}}/${{env.REPOSITORY}}/${{env.FRONTEND_IMAGE}}:$TAG
-
               
-              docker run -d -p 1013:5001 --name backend --network app-network ${{env.GAR_LOCATION}}-docker.pkg.dev/${{env.PROJECT_ID}}/${{env.REPOSITORY}}/${{env.BACKEND_IMAGE}}:$TAG
+              docker run -d -p 1013:5001 --name backend --network app-network --env-file /var/www/html/uat_1.0/backend/.env ${{env.GAR_LOCATION}}-docker.pkg.dev/${{env.PROJECT_ID}}/${{env.REPOSITORY}}/${{env.BACKEND_IMAGE}}:$TAG
               
               
