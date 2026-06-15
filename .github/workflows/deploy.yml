@@ -28,20 +28,20 @@ jobs:
             workload_identity_provider: 'projects/560553642849/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
             service_account: 'github-actions-sa@project-31e386f5-2cc7-4ee4-a4b.iam.gserviceaccount.com'
         
-        - name: Setup Terraform
-          uses: hashicorp/setup-terraform@v3
+        # - name: Setup Terraform
+        #   uses: hashicorp/setup-terraform@v3
 
-        - name: Terraform Init
-          run: terraform init 
-          working-directory: Terraform
+        # - name: Terraform Init
+        #   run: terraform init 
+        #   working-directory: Terraform
         
-        - name: Terraform Validate
-          run: terraform validate 
-          working-directory: Terraform
+        # - name: Terraform Validate
+        #   run: terraform validate 
+        #   working-directory: Terraform
         
-        - name: Terraform Apply
-          run: terraform apply -auto-approve
-          working-directory: Terraform
+        # - name: Terraform Apply
+        #   run: terraform apply -auto-approve
+        #   working-directory: Terraform
            
 
 
